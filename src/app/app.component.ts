@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener } from '@angular/core';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,20 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'proyecto-angular-coder';
+  
+  opened = window.innerWidth > 768; // 👈 define la propiedad
+  hasActiveRoute = false;
+
+  constructor(private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.hasActiveRoute = event.url !== '/';
+      }
+    });
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.opened = window.innerWidth > 768;
+  }
 }

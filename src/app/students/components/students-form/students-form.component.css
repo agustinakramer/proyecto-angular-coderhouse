@@ -1,0 +1,13 @@
+.studentFormContainer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.studentForm {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 30%;
+}
