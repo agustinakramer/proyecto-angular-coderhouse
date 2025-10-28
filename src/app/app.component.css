@@ -1,24 +1,20 @@
-/* Ocupa toda la altura de la pantalla */
 .sidenav-container {
-  height: calc(100vh - 64px); /* resta la altura de la toolbar */
+  height: calc(100vh - 64px);
   display: flex;
 }
 
-/* Sidenav fijo en el lateral */
 .sidenav {
   width: 240px;
   background-color: #1e1e1e;
   color: #fff;
 }
 
-/* Contenido principal a la derecha del sidenav */
 .main-content {
   flex: 1;
   padding: 24px;
   overflow: auto;
 }
 
-/* Toolbar fija arriba */
 app-toolbar {
   position: fixed;
   top: 0;
@@ -27,7 +23,6 @@ app-toolbar {
   z-index: 1000;
 }
 
-/* Empuja el contenido general hacia abajo para no tapar la toolbar */
 mat-sidenav-container {
   margin-top: 64px;
 }

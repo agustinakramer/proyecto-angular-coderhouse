@@ -1,40 +1,28 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './layout/navbar/navbar.component';
-import { ToolbarComponent } from './layout/toolbar/toolbar.component';
-import { StudentsModule } from './students/students.module';
-import { TitleStylingDirective } from './directives/title-styling.directive';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatListModule } from '@angular/material/list';
-import { MatTableModule } from '@angular/material/table';
+
+// módulos de la app
+import { SharedModule } from './shared/shared.module';
+import { LayoutModule } from './featured/dashboard/layout/layout.module';
+import { AuthModule } from './featured/auth/auth.module';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent,
-    ToolbarComponent,
-    TitleStylingDirective,
+    AppComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    StudentsModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatListModule,
-    MatTableModule,
+    SharedModule,
+    LayoutModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

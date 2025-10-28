@@ -1,11 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { StudentsListComponent } from './students/components/students-list/students-list.component';
-import { StudentsFormComponent } from './students/components/students-form/students-form.component';
-import { StudentsComponent } from './students/students.component';
+import { StudentsComponent } from './featured/dashboard/students/students.component';
+import { LoginComponent } from './featured/auth/login/login.component';
 
 const routes: Routes = [
-  { path: 'estudiantes', component: StudentsComponent },
+  { path: 'login', component: LoginComponent },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./featured/dashboard/dashboard.module')
+      .then(m => m.DashboardModule)
+  }
 ];
 
 @NgModule({

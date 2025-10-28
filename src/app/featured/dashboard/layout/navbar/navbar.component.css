@@ -1,0 +1,36 @@
+mat-icon {
+  margin-right: 8px;
+}
+
+a.active {
+  background-color: #865050;
+  border-radius: 4px;
+}
+
+.nav-footer {
+  margin-top: 12px;
+  padding: 8px 4px;
+}
+
+.subtle-login {
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.nav-footer mat-icon {
+  font-size: 20px;
+}
+
+.nav-footer .mat-list-item {
+  align-items: center;
+  height: 40px;
+}
+
+.subtle-login mat-icon {
+  margin-right: 8px;
+  font-size: 20px;
+}
+
+.subtle-login span {
+  line-height: 20px;
+}

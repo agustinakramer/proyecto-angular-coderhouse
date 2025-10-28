@@ -1,29 +1,13 @@
 <app-toolbar (menuClick)="sidenav.toggle()"></app-toolbar>
 
 <mat-sidenav-container class="sidenav-container">
-  <mat-sidenav #sidenav class="sidenav" mode="side" [(opened)]="opened">
+  <mat-sidenav #sidenav="matSidenav" class="sidenav" mode="side" [(opened)]="opened">
     <app-navbar></app-navbar>
   </mat-sidenav>
 
   <mat-sidenav-content class="main-content">
     <div class="content-wrapper">
       <router-outlet></router-outlet>
-      
-      <!-- Contenido por defecto cuando no hay ruta específica -->
-      <div class="welcome-content" *ngIf="!hasActiveRoute">
-        <div class="welcome-card">
-          <h1>Bienvenido al Sistema de Gestión de Estudiantes</h1>
-          <h2 appTitleStyling>¡Gestiona tus estudiantes de manera eficiente!</h2>
-          <p>Selecciona una opción del menú para comenzar</p>
-          
-          <div class="quick-actions">
-            <button mat-raised-button color="primary" routerLink="/estudiantes">
-              <mat-icon>people</mat-icon>
-              Ver Estudiantes
-            </button>
-          </div>
-        </div>
-      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -10,7 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class AppComponent {
   title = 'proyecto-angular-coder';
   
-  opened = window.innerWidth > 768; // 👈 define la propiedad
+  opened = window.innerWidth > 768;
   hasActiveRoute = false;
 
   constructor(private router: Router) {

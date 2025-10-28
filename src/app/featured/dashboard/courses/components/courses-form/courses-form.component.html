@@ -1,0 +1,60 @@
+
+<form [formGroup]="createForm" (ngSubmit)="onSubmit()">
+  <ng-container *ngIf="isEditing">
+    <mat-form-field appearance="fill">
+      <mat-label>ID</mat-label>
+      <input matInput disabled [value]="courseId" />
+    </mat-form-field>
+  </ng-container>
+
+  <mat-form-field class="w-full">
+    <mat-label>Titulo</mat-label>
+    <input
+      [ngClass]="{
+          'is-invalid': inputInvalid('name'),
+          'is-valid': inputValid('name') && createForm.get('name')?.dirty,
+        }"
+      matInput
+      name="name"
+      formControlName="name"
+    />
+
+    <mat-error> {{ getError('name') }} </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-full">
+    <mat-label>Descripción</mat-label>
+    <textarea
+      matInput
+      placeholder="Descripción"
+      name="description"
+      formControlName="description"
+    ></textarea>
+
+    <mat-error> {{ getError('description') }} </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="w-full">
+    <mat-label>Fecha inicio - Fecha fin</mat-label>
+    <mat-date-range-input [rangePicker]="picker">
+      <input matStartDate formControlName="beginDate" placeholder="Fecha inicio" />
+      <input matEndDate formControlName="endDate" placeholder="Fecha fin" />
+    </mat-date-range-input>
+    <mat-hint>MM/DD/YYYY – MM/DD/YYYY</mat-hint>
+    <mat-datepicker-toggle matIconSuffix [for]="picker"> </mat-datepicker-toggle>
+    <mat-date-range-picker #picker></mat-date-range-picker>
+  </mat-form-field>
+
+  <mat-form-field class="w-full">
+    <mat-label>Estado</mat-label>
+    <mat-select name="status" formControlName="status">
+      <mat-option value="Scheduled">Scheduled</mat-option>
+      <mat-option value="Started">Started</mat-option>
+      <mat-option value="Finished">Finished</mat-option>
+      <mat-option value="Cancelled">Cancelled</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary">Guardar</button>
+</form>
+

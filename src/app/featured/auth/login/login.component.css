@@ -1,0 +1,55 @@
+.login-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #3F5EFB;
+  background: radial-gradient(circle, rgba(63, 94, 251, 1) 0%, rgba(252, 70, 107, 1) 100%);
+}
+
+
+.login-card {
+  background: rgba(165, 159, 159, 0.377);
+  padding: 1rem 1.25rem;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  width: 360px;
+}
+
+.login-card mat-card-header {
+  padding-bottom: 0.5rem;
+}
+
+.login-card mat-card-title {
+  text-align: center;
+  font-weight: 600;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.mb-3 {
+  margin-bottom: 1rem;
+}
+
+.actions {
+  margin-top: 8px;
+  display: flex;
+}
+
+.actions .full-width {
+  display: block;
+}
+
+
+.login-card .mat-form-field {
+  width: 100%;
+}
+
+.login-card button.mat-raised-button {
+  height: 44px;
+  font-size: 0.95rem;
+}
