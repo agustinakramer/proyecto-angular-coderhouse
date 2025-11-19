@@ -1,0 +1,101 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@example.com",
+      "password": "admin123",
+      "role": "ADMIN"
+    },
+    {
+      "id": "2",
+      "email": "user@example.com",
+      "password": "user123",
+      "role": "USER"
+    },
+    {
+      "id": "3",
+      "email": "johndoe@example.com",
+      "password": "johndoe123",
+      "role": "USER"
+    }
+  ],
+  "courses": [
+    {
+      "id": "1",
+      "name": "Angular",
+      "description": "Angular es un framework de desarrollo de código abierto mantenido por Google para construir aplicaciones web de una sola página (SPA) rápidas y fiables. Utiliza TypeScript, un superconjunto de JavaScript, y se basa en una arquitectura de componentes, lo que facilita la creación de aplicaciones dinámicas, escalables y fáciles de mantener. ",
+      "beginDate": "2023-01-01",
+      "endDate": "2023-12-31",
+      "status": "Scheduled"
+    },
+    {
+      "id": "2",
+      "name": "React",
+      "description": "Aprende los conceptos básicos de React, una biblioteca de JavaScript para construir interfaces de usuario.",
+      "beginDate": "2023-02-01",
+      "endDate": "2023-11-30",
+      "status": "Cancelled"
+    },
+    {
+      "id": "3",
+      "name": "Vue.js",
+      "description": "Aprende los conceptos básicos de Vue.js, un framework progresivo para construir interfaces de usuario.",
+      "beginDate": "2023-03-01",
+      "endDate": "2023-10-31",
+      "status": "Started"
+    },
+    {
+      "id": "4",
+      "name": "NESTJS",
+      "description": "Aprende los conceptos básicos de NESTJS, un framework progresivo para construir aplicaciones del lado del servidor con Node.js.",
+      "beginDate": "2023-04-01",
+      "endDate": "2023-09-30",
+      "status": "Finished"
+    },
+    {
+      "id": "5",
+      "name": "MongoDB",
+      "description": "MongoDB es una base de datos NoSQL de código abierto que almacena datos en documentos flexibles similares a JSON en lugar de tablas y filas, como las bases de datos relacionales. Esta característica la hace ideal para trabajar con grandes volúmenes de datos de forma flexible y escalable, ya que su esquema puede cambiar fácilmente sin causar tiempo de inactividad. Es una opción popular para crear aplicaciones web y móviles modernas. ",
+      "beginDate": "2026-02-15T03:00:00.000Z",
+      "endDate": "2026-02-21T03:00:00.000Z",
+      "status": "Cancelled"
+    }
+  ],
+  "students": [
+     {
+      "id": 1,
+      "name": "Juan",
+      "lastName": "Perez",
+      "email": "juan.perez@example.com",
+      "course": "React"
+    },
+    {
+      "id": "2",
+      "name": "María",
+      "lastName": "Gómez",
+      "email": "maria.gomez@example.com",
+      "course": "Angular"
+    },
+    {
+      "id": "3",
+      "name": "Pedro",
+      "lastName": "Lopez",
+      "email": "pedro.lopez@example.com",
+      "course": "Vue.js"
+    },
+    {
+      "id": "4",
+      "name": "Lucía",
+      "lastName": "Fernández",
+      "email": "lucia.fernandez@example.com",
+      "course": "NESTJS"
+    },
+    {
+      "id": "5",
+      "name": "test",
+      "lastName": "test",
+      "email": "agustinakramer@gmail.com",
+      "course": "Vue.js"
+    }
+  ]
+}

@@ -12,50 +12,37 @@ import { StudentService } from '../../../../../core/services/students/student.se
   styleUrl: './students-list.component.css'
 })
 export class StudentsListComponent {
- @Input() students: Student[] = [];
-
   displayedColumns: string[] = ['id', 'fullName', 'email', 'course', 'actions'];
   dataSource = new MatTableDataSource<Student>();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private studentService: StudentService, private router: Router, private route: ActivatedRoute) {
+  constructor(private studentService: StudentService) {
     this.studentService.student$.subscribe((students) => {
       this.dataSource.data = students;
     });
   }
 
-  OnCreateStudent() {
-    this.studentService.clearEdit();
-    this.router.navigate(['create'], { relativeTo: this.route });
+  ngOnInit() {
+    this.studentService.getStudents();
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-    this.studentService.getStudents();
   }
 
-  ngOnChanges() {
-    if (this.students && this.students.length) {
-      this.dataSource.data = this.students;
-    }
-  }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
   OnDeleteStudent(id: number) {
     this.studentService.deleteStudent(id);
   }
 
-  OnEditStudent(id: number) {
-    this.studentService.setUpdateStudent(id);
-    this.router.navigate(['edit', id], { relativeTo: this.route });
+    applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 
  }

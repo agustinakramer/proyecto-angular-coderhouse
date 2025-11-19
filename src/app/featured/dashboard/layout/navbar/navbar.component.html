@@ -1,6 +1,11 @@
 <mat-nav-list>
   <h3 mat-subheader>Menú</h3>
 
+  <a mat-list-item routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+    <mat-icon>home</mat-icon>
+    <span>Inicio</span>
+  </a>
+
   <a mat-list-item routerLink="/dashboard/students" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
     <mat-icon>people</mat-icon>
     <span>Estudiantes</span>
@@ -11,9 +16,9 @@
     <span>Cursos</span>
   </a>
 
-  <a mat-list-item routerLink="/login" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: false }">
-    <mat-icon>login</mat-icon>
-    <span>Acceder</span>
+  <a mat-list-item (click)="logout()">
+    <mat-icon>logout</mat-icon>
+    <span>Cerrar sesión</span>
   </a>
 
   </mat-nav-list>

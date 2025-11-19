@@ -9,6 +9,8 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './featured/dashboard/layout/layout.module';
 import { AuthModule } from './featured/auth/auth.module';
+import { provideHttpClient, withFetch } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -20,9 +22,12 @@ import { AuthModule } from './featured/auth/auth.module';
     AppRoutingModule,
     SharedModule,
     LayoutModule,
-    AuthModule
+    AuthModule,
+    StoreModule.forRoot({}, {})
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withFetch())
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -2,41 +2,53 @@ import { Injectable } from '@angular/core';
 import { Course } from '../models/Course';
 import { MOCK_COURSES } from './data/mock';
 import { BehaviorSubject, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../../utils/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
-  private courses: Course[] = MOCK_COURSES;
+  private courses: Course[] = [];
   private courseSubject = new BehaviorSubject<Course[]>([]);
   courses$ = this.courseSubject.asObservable();
-  constructor() {
-    this.courseSubject.next(this.courses);
+
+  private coursesUrl = `${API_URL}/courses`;
+
+  constructor(private httpClient: HttpClient) {
+    this.getCourses();
   }
 
   getCourses() {
-    this.courseSubject.next(this.courses);
+    this.httpClient.get<Course[]>(this.coursesUrl).subscribe(courses => {
+      this.courses = courses;
+      this.courseSubject.next(courses);
+    });
   }
 
   getCourse(id: number) {
-    return of(this.courses.find(course => course.id === id));
+    return this.httpClient.get<Course>(`${this.coursesUrl}/${id}`);
   }
 
   addCourse(course: Course) {
-    const newId = this.courses[this.courses.length - 1].id + 1;
+    const newId = String(Number(this.courses[this.courses.length - 1].id) + 1);
     course.id = newId;
-    this.courses.push(course);
-    this.courseSubject.next([...this.courses]);
+    this.httpClient.post<Course>(this.coursesUrl, course).subscribe(addedCourse => {
+      this.courses.push(addedCourse);
+      this.courseSubject.next(this.courses);
+    });
   }
 
   updateCourse(course: Course) {
-    const updatedCourses = this.courses.map((c) => (c.id === course.id ? course : c));
-    this.courseSubject.next(updatedCourses);
-    this.courses = updatedCourses;
+    this.httpClient.put<Course>(`${this.coursesUrl}/${course.id}`, course).subscribe(updatedCourse => {
+      const updatedCourses = this.courses.map(c => (c.id === updatedCourse.id ? updatedCourse : c));
+      this.courseSubject.next(updatedCourses);
+    });
   }
   deleteCourse(id: number) {
-    const updatedCourses = this.courses.filter((c) => c.id !== id);
-    this.courseSubject.next(updatedCourses);
-    this.courses = updatedCourses;
+    this.httpClient.delete(`${this.coursesUrl}/${id}`).subscribe(() => {
+      const updatedCourses = this.courses.filter(c => c.id !== id);
+      this.courseSubject.next(updatedCourses);
+    });
   }
 }

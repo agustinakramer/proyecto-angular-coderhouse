@@ -11,11 +11,11 @@
 
 
 .login-card {
-  background: rgba(165, 159, 159, 0.377);
-  padding: 1rem 1.25rem;
+  background: #b4a5cc;
+  padding: 1.25rem 1.5rem;
   border-radius: 8px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
-  width: 360px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  width: 380px;
 }
 
 .login-card mat-card-header {

@@ -1,52 +1,57 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Student } from '../models/Student';
-import { STUDENTS_MOCK } from './data/mock';
+import { HttpClient } from '@angular/common/http';
+import { API_URL } from '../../utils/constants';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
-  private userSubject = new BehaviorSubject<Student[]>([...STUDENTS_MOCK]);
-  student$ = this.userSubject.asObservable();
+  private students: Student[] = [];
+  private studentSubject = new BehaviorSubject<Student[]>([]);
+  student$ = this.studentSubject.asObservable();
 
   private studentEdit = new BehaviorSubject<Student | null>(null);
   studentEdit$ = this.studentEdit.asObservable();
 
-  private students: Student[] = [...STUDENTS_MOCK];
+  private studentsUrl = `${API_URL}/students`;
 
-  getStudents(): Observable<Student[]> {
-    return this.student$;
+  constructor(private http: HttpClient) {
+    this.getStudents();
   }
 
-  addStudent(student: Partial<Student>) {
-    console.log('StudentService - Adding student:', student);
-    const newId = this.students.length > 0 ? Math.max(...this.students.map(s => s.id)) + 1 : 1;
-    const newStudent: Student = { ...(student as Student), id: newId };
-    this.students.push(newStudent);
-    this.userSubject.next([...this.students]);
-    console.log('StudentService - Emitted new list');
+  getStudents() {
+    this.http.get<Student[]>(this.studentsUrl).subscribe(students => {
+      this.students = students;
+      this.studentSubject.next(students);
+    });
+  }
+
+  getStudent(id: number) {
+    return this.http.get<Student>(`${this.studentsUrl}/${id}`);
+  }
+
+  addStudent(student: Student) {
+    const newId = String(Number(this.students[this.students.length - 1].id) + 1);
+    student.id = newId;
+    this.http.post<Student>(this.studentsUrl, student).subscribe(addedStudent => {
+      this.students.push(addedStudent);
+      this.studentSubject.next(this.students);
+    });
+  }
+
+  updateStudent(student: Student) {
+    this.http.put<Student>(`${this.studentsUrl}/${student.id}`, student).subscribe(updatedStudent => {
+      const updatedStudents = this.students.map(s => (s.id === updatedStudent.id ? updatedStudent : s));
+      this.studentSubject.next(updatedStudents);
+    });
   }
 
   deleteStudent(id: number) {
-    this.students = this.students.filter(s => s.id !== id);
-    this.userSubject.next([...this.students]);
-  }
-
-  setUpdateStudent(id: number) {
-    const student = this.students.find(s => s.id === id) || null;
-    this.studentEdit.next(student);
-  }
-
-  clearEdit() {
-    this.studentEdit.next(null);
-  }
-
-  updateStudent(id: number, data: Student): boolean {
-    const idx = this.students.findIndex(s => s.id === id);
-    if (idx === -1) return false;
-    this.students[idx] = { ...data, id };
-    this.userSubject.next([...this.students]);
-    return true;
+    this.http.delete(`${this.studentsUrl}/${id}`).subscribe(() => {
+      const updatedStudents = this.students.filter(s => s.id !== id);
+      this.studentSubject.next(updatedStudents);
+    });
   }
 }
