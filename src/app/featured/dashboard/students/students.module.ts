@@ -6,6 +6,11 @@ import { StudentsFormComponent } from './components/students-form/students-form.
 
 import { SharedModule } from '../../../shared/shared.module';
 import { StudentsRoutingModule } from './students-routing.module';
+import { StoreModule } from '@ngrx/store';
+import { studentsFeature } from './store/students.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { StudentsEffects } from './store/students.effects';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @NgModule({
   declarations: [
@@ -16,7 +21,10 @@ import { StudentsRoutingModule } from './students-routing.module';
   imports: [
     CommonModule,
     SharedModule,
-    StudentsRoutingModule
+    StudentsRoutingModule,
+  MatProgressSpinnerModule,
+    StoreModule.forFeature(studentsFeature),
+    EffectsModule.forFeature([StudentsEffects])
   ],
   exports: [
     StudentsComponent

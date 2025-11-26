@@ -1,3 +1,27 @@
-<p>dashboard works!</p>
+<div class="dashboard-simple">
+	<div class="cards">
+		<mat-card class="simple-card">
+			<mat-card-content>
+				<mat-icon class="card-icon">menu_book</mat-icon>
+				<div class="card-title">Cursos</div>
+				<div class="card-count">{{ (courses$ | async)?.length || 0 }}</div>
+			</mat-card-content>
+			<mat-card-actions>
+			<button mat-flat-button color="primary" routerLink="courses">Ir a Cursos</button>
+			</mat-card-actions>
+		</mat-card>
 
-<router-outlet></router-outlet>
+		<mat-card class="simple-card">
+			<mat-card-content>
+				<mat-icon class="card-icon">school</mat-icon>
+				<div class="card-title">Estudiantes</div>
+				<div class="card-count">{{ (students$ | async)?.length || 0 }}</div>
+			</mat-card-content>
+			<mat-card-actions>
+			<button mat-flat-button color="primary" routerLink="students">Ir a Estudiantes</button>
+			</mat-card-actions>
+		</mat-card>
+	</div>
+
+	<router-outlet></router-outlet>
+</div>

@@ -9,8 +9,10 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { LayoutModule } from './featured/dashboard/layout/layout.module';
 import { AuthModule } from './featured/auth/auth.module';
-import { provideHttpClient, withFetch } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 import { StoreModule } from '@ngrx/store';
+import { rootReducer } from './core/store';
+import { EffectsModule } from '@ngrx/effects';
 
 
 @NgModule({
@@ -19,15 +21,16 @@ import { StoreModule } from '@ngrx/store';
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     SharedModule,
     LayoutModule,
     AuthModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot(rootReducer),
+    EffectsModule.forRoot([]),
+    HttpClientModule
   ],
-  providers: [
-    provideHttpClient(withFetch())
-  ],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

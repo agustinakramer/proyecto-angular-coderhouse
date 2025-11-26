@@ -1,0 +1,44 @@
+.dashboard-simple {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  align-items: center;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 280px));
+  gap: 16px;
+  width: 100%;
+  justify-content: center;
+}
+
+.simple-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 18px;
+}
+
+.card-icon {
+  font-size: 44px;
+  color: rgba(0,0,0,0.54);
+}
+
+.card-title {
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.card-count {
+  font-size: 1.6rem;
+  margin-top: 6px;
+  color: rgba(0,0,0,0.9);
+}
+
+@media (max-width: 520px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+}

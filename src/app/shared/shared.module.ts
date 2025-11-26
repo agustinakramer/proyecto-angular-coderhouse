@@ -21,6 +21,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { LayoutModule as CdkLayoutModule } from '@angular/cdk/layout';
 
 const MATERIAL = [
@@ -32,6 +33,7 @@ const MATERIAL = [
   MatTableModule,
   MatFormFieldModule,
   MatInputModule,
+  MatProgressSpinnerModule,
   MatSelectModule,
   MatDatepickerModule,
   MatNativeDateModule,

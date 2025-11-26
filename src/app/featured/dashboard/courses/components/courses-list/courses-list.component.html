@@ -8,6 +8,12 @@
       <mat-label>Filter</mat-label>
       <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Angular" #input />
     </mat-form-field>
+    <div class="loading-overlay" *ngIf="isLoading$ | async">
+      <div class="spinner-box">
+        <mat-progress-spinner mode="indeterminate" diameter="48" color="accent"></mat-progress-spinner>
+        <div class="loading-text">Cargando datos…</div>
+      </div>
+    </div>
 
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="dataSource">

@@ -21,6 +21,10 @@ export class StudentService {
     this.getStudents();
   }
 
+  getStudentsForEffect() {
+    return this.http.get<Student[]>(this.studentsUrl);
+  }
+
   getStudents() {
     this.http.get<Student[]>(this.studentsUrl).subscribe(students => {
       this.students = students;

@@ -3,6 +3,11 @@ import { API_URL } from '../../utils/constants';
 import { HttpClient } from '@angular/common/http';
 import { User } from './model/User';
 import { Router } from '@angular/router';
+import { map, Observable, of } from 'rxjs';
+import { Rootstate } from '../../store';
+import { Store } from '@ngrx/store';
+import { selectAuthUser } from '../../store/auth/auth.selector';
+import { setAuthUser } from '../../store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -10,32 +15,49 @@ import { Router } from '@angular/router';
 export class AuthService {
 
   private usersUrl = `${API_URL}/users`;
-  user: User | null = null;
+  user$: Observable<any>;
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router, private store: Store<Rootstate>) {
+    this.user$ = this.store.select(selectAuthUser);
 
-  login(email: string, password: string): void {
-    this.httpClient.get<User[]>(this.usersUrl).subscribe((users) => {
-      const user = users.find(u => u.email === email);
-      if(!user)
-        { throw new Error('User not found'); }
-    if(user.password !== password) {
-        throw new Error('Invalid password');
-      }
-    localStorage.setItem('token', user.email);
-    this.user = user;
-    this.router.navigate(['dashboard']);
+    const token = localStorage.getItem('token');
+    if (token) {
+      const [email, password] = token.split('&');
+      this.login(email, password).subscribe(user => {
+        this.store.dispatch(setAuthUser({ payload: user }));
+      });
+    }
+  }
 
-  });
+  login(email: string, password: string) {
+    return this.httpClient.get<User[]>(this.usersUrl).pipe(
+      map(users => {
+        const user = users.find(user => user.email === email && user.password === password);
+
+        if(!user) {
+          throw new Error('Invalid credentials');
+        }
+
+        this.setToken(`${user.email}&${user.password}`);
+        this.store.dispatch(setAuthUser({ payload: user }));
+
+        return user;
+      }   
+    ))
+  }
+
+  setToken(email: string): void {
+    localStorage.setItem('token', email);
   }
 
   logout(): void {
     localStorage.removeItem('token');
-    this.user = null;
+    this.store.dispatch(setAuthUser({ payload: null }));
     this.router.navigate(['/login']);
   }
 
   isAuthenticated() {
     return !!localStorage.getItem('token');
   }
+
 }

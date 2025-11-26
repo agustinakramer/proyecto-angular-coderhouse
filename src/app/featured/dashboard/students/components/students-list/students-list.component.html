@@ -9,6 +9,14 @@
       <input matInput (keyup)="applyFilter($event)" placeholder="Buscar por nombre o email" #input />
     </mat-form-field>
 
+    <!-- Loading overlay -->
+    <div class="loading-overlay" *ngIf="isLoading$ | async">
+      <div class="spinner-box">
+        <mat-progress-spinner mode="indeterminate" diameter="48" color="accent"></mat-progress-spinner>
+        <div class="loading-text">Cargando datos…</div>
+      </div>
+    </div>
+
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width">
 
   <!-- ID Column -->
@@ -43,7 +51,7 @@
       <button mat-icon-button color="primary" matTooltip="Edit" [routerLink]="['edit', element.id]">
         <mat-icon>edit</mat-icon>
       </button>
-      <button mat-icon-button color="warn" matTooltip="Delete" (click)="OnDeleteStudent(element.id)">
+      <button mat-icon-button color="warn" matTooltip="Delete" (click)="onDeleteStudent(element.id)">
         <mat-icon>delete</mat-icon>
       </button>
     </td>

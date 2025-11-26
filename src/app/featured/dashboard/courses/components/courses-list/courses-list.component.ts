@@ -1,31 +1,57 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit, OnDestroy } from '@angular/core';
 import { Course, courseColumns } from '../../../../../core/services/models/Course';
 import { MatTab } from '@angular/material/tabs';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { CoursesService } from '../../../../../core/services/courses/courses.service';
+import { Rootstate } from '../../../../../core/store';
+import { Store } from '@ngrx/store';
+import { Observable, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { selectCourses, selectCoursesError, selectCoursesLoading } from '../../store/courses.selector';
+import { coursesActions } from '../../store/courses.actions';
 
 @Component({
   selector: 'app-courses-list',
   standalone: false,
   templateUrl: './courses-list.component.html',
-  styleUrl: './courses-list.component.css'
+  styleUrls: ['./courses-list.component.css']
 })
-export class CoursesListComponent {
+export class CoursesListComponent implements OnInit, OnDestroy {
  displayedColumns: string[] = ['id', 'name', 'description', 'beginDate', 'endDate', 'status', 'actions'];
   dataSource = new MatTableDataSource<Course>([]);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
 
-  constructor(private courseService: CoursesService) {
-    this.courseService.courses$.subscribe((courses) => {
-      console.log('CoursesListComponent - received courses', courses && courses.length ? courses.length : 0);
-      this.dataSource.data = courses;
-    });
+  course$: Observable<Course[]>;
+  isLoading$: Observable<boolean>;
+  error$: Observable<any>;
+
+  private destroy$ = new Subject<void>();
+
+  constructor(private courseService: CoursesService, private store: Store<Rootstate>) {
+    this.course$ = this.store.select(selectCourses);
+    this.isLoading$ = this.store.select(selectCoursesLoading);
+    this.error$ = this.store.select(selectCoursesError);
   }
 
   ngOnInit() {
-    this.courseService.getCourses();
+    this.store.dispatch(coursesActions.loadCourses());
+
+    this.course$.pipe(takeUntil(this.destroy$)).subscribe({
+      next: (courses) => {
+        this.dataSource.data = courses;
+      },
+      error: (err) => {
+        console.error('Error loading courses in CoursesListComponent:', err);
+      }
+    });
+
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   ngAfterViewInit() {
